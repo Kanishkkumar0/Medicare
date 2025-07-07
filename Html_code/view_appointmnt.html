@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Appointment Details</h2>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Patient Information</h4>
+                    <div class="patient-details">
+                        <p><strong>Name:</strong> {{ appointment.patient_first_name }} {{ appointment.patient_last_name }}</p>
+                        <p><strong>Age:</strong> {{ appointment.patient_age }} years</p>
+                        <p><strong>Gender:</strong> {{ appointment.gender }}</p>
+                        <p><strong>Blood Group:</strong> {{ appointment.blood_group }}</p>
+                        <p><strong>Phone:</strong> {{ appointment.patient_phone }}</p>
+                        <p><strong>Emergency Contact:</strong> {{ appointment.patient_emergency_contact }}</p>
+                        <p><strong>Address:</strong> {{ appointment.patient_address }}</p>
+                        <p><strong>Medical History:</strong> {{ appointment.patient_medical_history }}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h4>Appointment Information</h4>
+                    <div class="appointment-details">
+                        <p><strong>Date:</strong> {{ appointment.appointment_date }}</p>
+                        <p><strong>Time:</strong> {{ appointment.appointment_time }}</p>
+                        <p><strong>Status:</strong> 
+                            <span class="badge {% if appointment.status == 'scheduled' %}bg-primary{% elif appointment.status == 'completed' %}bg-success{% else %}bg-danger{% endif %}">
+                                {{ appointment.status }}
+                            </span>
+                        </p>
+                        <p><strong>Reason:</strong> {{ appointment.reason }}</p>
+                        <p><strong>Notes:</strong> {{ appointment.notes }}</p>
+                        {% if appointment.room_id %}
+                        <p><strong>Room:</strong> {{ appointment.room_number }} ({{ appointment.room_type|title }})</p>
+                        {% else %}
+                        <p><strong>Room:</strong> Not allocated</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            {% if appointment.status == 'scheduled' %}
+            <div class="mt-4">
+                <button class="btn btn-success" onclick="startAppointment()">Start Appointment</button>
+                <button class="btn btn-danger" onclick="cancelAppointment()">Cancel Appointment</button>
+                {% if not appointment.room_id %}
+                <a href="{{ url_for('allocate_room', appointment_id=appointment.id) }}" class="btn btn-primary">Allocate Room</a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .patient-details, .appointment-details {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 15px;
+    }
+    .patient-details p, .appointment-details p {
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #eee;
+    }
+    .patient-details p:last-child, .appointment-details p:last-child {
+        border-bottom: none;
+    }
+    .badge {
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+    .bg-primary {
+        background-color: #007bff;
+    }
+    .bg-success {
+        background-color: #28a745;
+    }
+    .bg-danger {
+        background-color: #dc3545;
+    }
+</style>
+
+<script>
+function startAppointment() {
+    fetch(`/update_appointment_status/{{ appointment.id }}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `status=in_progress&notes=Appointment started`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.reload();
+        } else {
+            alert('Failed to start appointment. Please try again.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while starting the appointment.');
+    });
+}
+
+function cancelAppointment() {
+    if (confirm('Are you sure you want to cancel this appointment?')) {
+        fetch(`/update_appointment_status/{{ appointment.id }}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `status=cancelled&notes=Appointment cancelled by doctor`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.reload();
+            } else {
+                alert('Failed to cancel appointment. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while cancelling the appointment.');
+        });
+    }
+}
+</script>
+{% endblock %} 
