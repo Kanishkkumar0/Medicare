@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Details | Hospital Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+        }
+        
+        .user-nav {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        
+        .back-btn {
+            background-color: #3498db;
+        }
+        
+        .appointment-details {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            margin-top: 30px;
+        }
+        
+        .details-header {
+            margin-bottom: 30px;
+        }
+        
+        .details-header h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+        
+        .status-confirmed {
+            background-color: #d4f5e2;
+            color: #27ae60;
+        }
+        
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .detail-item {
+            margin-bottom: 15px;
+        }
+        
+        .detail-item h3 {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .detail-item p {
+            color: #2c3e50;
+            font-size: 16px;
+        }
+        
+        .actions {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .btn-primary {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .btn-danger {
+            background-color: #e74c3c;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>Hospital Management System</h1>
+                </div>
+                <div class="user-nav">
+                    <a href="/patient_dashboard" class="back-btn">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="appointment-details">
+            <div class="details-header">
+                <h2>Appointment Details</h2>
+                <span class="status status-confirmed">Confirmed</span>
+            </div>
+            
+            <div class="details-grid">
+                <div class="detail-item">
+                    <h3>Date & Time</h3>
+                    <p>10-04-2025 09:30 AM</p>
+                </div>
+                <div class="detail-item">
+                    <h3>Doctor</h3>
+                    <p>Dr. John Smith</p>
+                </div>
+                <div class="detail-item">
+                    <h3>Department</h3>
+                    <p>Cardiology</p>
+                </div>
+                <div class="detail-item">
+                    <h3>Appointment ID</h3>
+                    <p>APT-2025-001</p>
+                </div>
+                <div class="detail-item">
+                    <h3>Reason for Visit</h3>
+                    <p>Regular checkup and consultation</p>
+                </div>
+                <div class="detail-item">
+                    <h3>Location</h3>
+                    <p>Cardiology Department, Room 205</p>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button class="btn btn-primary">Reschedule</button>
+                <button class="btn btn-danger">Cancel Appointment</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
